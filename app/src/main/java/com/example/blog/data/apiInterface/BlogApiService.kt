@@ -1,6 +1,6 @@
-package com.example.blog.apiInterface
+package com.example.blog.data.apiInterface
 
-import com.example.blog.model.BlogPost
+import com.example.blog.data.model.BlogPost
 import retrofit2.http.GET
 import retrofit2.http.Query
 

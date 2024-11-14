@@ -1,6 +1,6 @@
 package com.example.blog.di
 
-import com.example.blog.apiInterface.BlogApiService
+import com.example.blog.data.apiInterface.BlogApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

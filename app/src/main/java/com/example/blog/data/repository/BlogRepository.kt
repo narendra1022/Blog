@@ -1,7 +1,7 @@
-package com.example.blog.repository
+package com.example.blog.data.repository
 
-import com.example.blog.apiInterface.BlogApiService
-import com.example.blog.model.BlogPost
+import com.example.blog.data.apiInterface.BlogApiService
+import com.example.blog.data.model.BlogPost
 import com.example.blog.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

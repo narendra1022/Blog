@@ -1,4 +1,4 @@
-package com.example.blog.model
+package com.example.blog.data.model
 
 data class BlogPost(
     val id: Int,

@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.example.blog"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.blog"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -87,8 +87,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-// WebView
-    implementation(libs.androidx.ui.webkit)
+    // Hilt and Compose integration
+    implementation (libs.androidx.hilt.navigation.compose)
+
 
 }
 
