@@ -1,6 +1,7 @@
 package com.example.blog.composables
 
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,53 +18,59 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import java.net.URLDecoder
-import java.nio.charset.StandardCharsets
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BlogContentScreen(blogUrl: String) {
-    // State to manage loading status
     var isLoading by remember { mutableStateOf(true) }
 
-    // Use Scaffold for the top bar and padding
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Blog Content") }
-            )
+            TopAppBar(title = { Text("Blog Content") })
         }
     ) { paddingValues ->
-
-        // Apply padding to WebView content
         Box(modifier = Modifier.padding(paddingValues)) {
-            // Conditionally show progress bar or WebView
-            if (isLoading) {
-                LoadingIndicator()
-            } else {
-                // Decode URL once before loading
-                val decodedUrl = URLDecoder.decode(blogUrl, StandardCharsets.UTF_8.toString())
-                WebViewComposable(
-                    url = decodedUrl
-                )
-            }
+            // WebView or loading indicator based on state
+            if (isLoading) LoadingIndicator() else WebViewComposable(
+                url = blogUrl,
+                onPageStateChange = { isLoading = it })
         }
     }
 }
 
 @Composable
-fun WebViewComposable(url: String) {
-    AndroidView(factory = { context ->
-        WebView(context).apply {
-            settings.javaScriptEnabled = true
-            loadUrl(url)
-        }
-    }, modifier = Modifier.fillMaxSize())
+fun WebViewComposable(url: String, onPageStateChange: (Boolean) -> Unit) {
+    AndroidView(
+        factory = { context ->
+            WebView(context).apply {
+                settings.apply {
+                    javaScriptEnabled = true
+                    domStorageEnabled = true
+                }
+                webViewClient = object : WebViewClient() {
+                    override fun onPageStarted(
+                        view: WebView?,
+                        url: String?,
+                        favicon: android.graphics.Bitmap?
+                    ) {
+                        super.onPageStarted(view, url, favicon)
+                        onPageStateChange(true)
+                    }
+
+                    override fun onPageFinished(view: WebView?, url: String?) {
+                        super.onPageFinished(view, url)
+                        onPageStateChange(false)
+                    }
+                }
+                loadUrl(url)
+            }
+        },
+        modifier = Modifier.fillMaxSize()
+    )
 }
 
 @Composable
 fun LoadingIndicator() {
-    // A simple loading indicator centered in the screen
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         CircularProgressIndicator()
     }

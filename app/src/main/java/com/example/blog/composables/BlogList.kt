@@ -41,7 +41,6 @@ fun BlogList(posts: List<BlogPost>, onItemClick: (BlogPost) -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-
 fun BlogListScreen(navController: NavController, viewModel: BlogViewModel = hiltViewModel()) {
     val blogPosts by viewModel.blogPosts.collectAsState()
 
@@ -63,7 +62,6 @@ fun BlogListScreen(navController: NavController, viewModel: BlogViewModel = hilt
         }
     }
 }
-
 
 @Composable
 fun ErrorMessage(exception: Throwable) {

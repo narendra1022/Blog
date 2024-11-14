@@ -25,7 +25,7 @@ fun BlogItem(blogPost: BlogPost, onClick: (BlogPost) -> Unit) {
             .fillMaxWidth()
             .clickable { onClick(blogPost) }
             .clip(RoundedCornerShape(5.dp))
-            .animateContentSize(), // Animated card resizing
+            .animateContentSize(),
         elevation = 4.dp,
         backgroundColor = MaterialTheme.colorScheme.secondaryContainer
     ) {
